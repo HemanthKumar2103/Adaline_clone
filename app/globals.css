@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fragment+Mono:ital,wght@0,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --grid-margin: 26px;
+  --nav-height: 64px;
+  --nav-z-index: 200;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scrolling animations */
+.scroll-animation {
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Atlas typography classes */
+.atlas-web-lg {
+  font-family: 'Akkurat LL', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 43px;
+  line-height: 42.4px;
+  letter-spacing: -1.7px;
+  font-weight: 400;
+}
+
+.atlas-web-base {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.atlas-web-sm {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.atlas-web-mono {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.atlas-fade {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+/* Custom color utilities */
+.text-pebble-900 { color: #1c1917; }
+.text-pebble-600 { color: #2f2921; }
+.text-pebble-500 { color: #6b7280; }
+.text-pebble-400 { color: #9ca3af; }
+.bg-pebble-50 { background-color: #fafaf9; }
+.bg-pebble-200 { background-color: #e7e5e4; }
+.border-pebble-200 { border-color: #e7e5e4; }
+
+.text-meadow-900 { color: #14532d; }
+.text-meadow-700 { color: #075825; }
+.bg-meadow-700 { background-color: #086229; }
+.bg-meadow-50 { background-color: #0a7029; }
+
+/* Smooth transitions for all interactive elements */
+button, a, [role="button"] {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
