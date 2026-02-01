@@ -8,6 +8,10 @@ const inter = Inter({
   weight: ['300', '400', '500', '600', '700']
 })
 
+if (typeof window !== 'undefined') {
+  window.history.scrollRestoration = 'manual'
+}
+
 export const metadata = {
   title: 'Adaline',
   description: 'Adaline is the end-to-end AI agent platform for world-class teams. Iterate with prompt engineering, evaluate with AI-powered testing, and monitor with comprehensive observability. Build, test, and deploy AI agents faster with LLMOps tools.',

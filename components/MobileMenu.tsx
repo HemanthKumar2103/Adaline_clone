@@ -44,7 +44,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
   return (
     <div className="fixed inset-0 z-[9998] lg:hidden" onClick={onClose}>
-      {/* Background Images */}
       <div className="absolute inset-0 z-0">
         <img 
           src={images[currentImageIndex]} 
@@ -53,7 +52,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         />
       </div>
 
-      {/* Menu Content */}
       <div className="relative z-10 bg-pebble-50/95 backdrop-blur-sm h-full overflow-y-auto pt-[var(--nav-height)]" onClick={(e) => e.stopPropagation()}>
         <div className="px-grid-margin flex flex-col py-4" style={{ fontFamily: '"fragmentMono", "fragmentMono Fallback", fragmentMono, SFMono-Regular, SF Mono, JetBrains Mono, Fira Code, Cascadia Code, Source Code Pro, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace' }}>
           <div className="flex flex-col gap-4 py-2">

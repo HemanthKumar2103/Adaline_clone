@@ -28,7 +28,6 @@ export default function HeroSection() {
   const [shuffledLogos, setShuffledLogos] = useState(companyLogos)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Shuffle array function
   const shuffleArray = (array: typeof companyLogos) => {
     const shuffled = [...array]
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -40,9 +39,11 @@ export default function HeroSection() {
 
   useEffect(() => {
     setShuffledLogos(shuffleArray(companyLogos))
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
   }, [])
 
-  // Generate all image paths
   const images = [
     ...Array.from({ length: 28 }, (_, i) => `/assets/standard/${String(i + 1).padStart(2, '0')}.jpg`),
     ...Array.from({ length: 252 }, (_, i) => `/assets/standard/graded_4K_100_gm_50_1080_3-${String(i + 30).padStart(3, '0')}.jpg`)
@@ -53,12 +54,10 @@ export default function HeroSection() {
       const newScrollY = window.scrollY
       setScrollY(newScrollY)
       
-      // Calculate image index based on scroll position
       const scrollProgress = newScrollY / (document.body.scrollHeight - window.innerHeight)
       const imageIndex = Math.floor(scrollProgress * (images.length - 1))
       setCurrentImageIndex(Math.min(imageIndex, images.length - 1))
       
-      // Show video overlay from image 235 to end
       if (imageIndex >= 235) {
         setShowVideoOverlay(true)
       } else {
@@ -79,7 +78,6 @@ export default function HeroSection() {
 
   return (
     <section className="bg-pebble-50 relative">
-      {/* Background Images */}
       <div className="fixed inset-0 z-0">
         <img 
           src={images[currentImageIndex]} 
@@ -87,7 +85,6 @@ export default function HeroSection() {
           className="w-full h-full object-cover transition-opacity duration-100 gpu-accelerated"
         />
         
-        {/* Video overlay */}
         <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 ${showVideoOverlay ? 'opacity-100 scale-100 ease-out' : 'opacity-0 scale-75 ease-in pointer-events-none'}`} style={{ width: '80%', maxWidth: '800px', aspectRatio: '16/9' }}>
           <div className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl cursor-pointer">
             <video 
@@ -135,7 +132,6 @@ export default function HeroSection() {
                 <span>The single platform to iterate, evaluate, deploy, and monitor AI agents</span>
               </h1>
               
-              {/* Company Logos Section */}
               <div className="max-w-full md:w-full">
                 <div className="flex flex-col items-center overflow-hidden">
                   <p className={`atlas-web-mono text-black/70 mb-4 ${fadeClass}`}>Trusted by</p>

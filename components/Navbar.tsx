@@ -25,54 +25,66 @@ export default function Navbar() {
   const IterateIcon = ({ size, duration = 10, isHovered, className = "" }: { size: number; duration?: number; isHovered: boolean; className?: string }) => {
     return (
       <div 
-        className={`relative x-10 flex items-center justify-center ${className}`}
+        className={`relative flex items-center justify-center ${className}`}
         style={{ width: size, height: size }}
       >
-        <div className="absolute x-2 inset-0 z-20 flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
           <span className="text-lg font-light text-[#0F1F10]">+</span>
         </div>
         <motion.div
-          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+          className="absolute inset-0 flex items-center justify-center"
           animate={isHovered ? { rotate: 360 } : { rotate: 0 }}
           transition={
             isHovered
               ? { repeat: Infinity, duration: duration, ease: "linear" }
               : { duration: 0.8, ease: "easeOut" }
           }
+          style={{ 
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+            perspective: '1000px'
+          }}
         >
           <svg
-            viewBox="0 0 64 64"
+            viewBox="0 0 100 100"
             className="w-full h-full text-[#0F1F10]"
             stroke="currentColor"
             fill="none"
-            strokeWidth="1.2"
+            strokeWidth="1"
+            style={{ 
+              shapeRendering: 'geometricPrecision',
+              transform: 'translateZ(0)'
+            }}
           >
-            <path
-              d="m32 8 18.764 9.036 4.634 20.304-12.985 16.283H21.587L8.602 37.341l4.634-20.305z"
-              vectorEffect="non-scaling-stroke"
-            />
+            <polygon points="50,5 86.6,25 86.6,75 50,95 13.4,75 13.4,25" />
           </svg>
         </motion.div>
         <motion.div
-          className="absolute inset-0 scale-[0.65]"
+          className="absolute inset-0 flex items-center justify-center scale-[0.65]"
           animate={isHovered ? { rotate: -360 } : { rotate: 0 }}
           transition={
             isHovered
               ? { repeat: Infinity, duration: duration * 1.5, ease: "linear" }
               : { duration: 0.8, ease: "easeOut" }
           }
+          style={{ 
+            transform: 'translateZ(0) scale(0.65)',
+            backfaceVisibility: 'hidden',
+            perspective: '1000px'
+          }}
         >
           <svg
-            viewBox="0 0 64 64"
+            viewBox="0 0 100 100"
             className="w-full h-full text-[#0F1F10]"
             stroke="currentColor"
             fill="none"
-            strokeWidth="1.2"
+            strokeWidth="1"
+            style={{ 
+              shapeRendering: 'geometricPrecision',
+              transform: 'translateZ(0)'
+            }}
           >
-            <path
-              d="m32 8 15.427 5.615 8.208 14.217L52.785 44 40.209 54.553H23.79L11.215 44l-2.85-16.168 8.208-14.217z"
-              vectorEffect="non-scaling-stroke"
-            />
+            <polygon points="50,5 86.6,25 86.6,75 50,95 13.4,75 13.4,25" />
           </svg>
         </motion.div>
       </div>
@@ -177,7 +189,6 @@ export default function Navbar() {
         <div className="h-[var(--nav-height)] relative shadow-[0_1px_0_0_transparent] transition-shadow duration-200" style={{ opacity: 1 }}>
           <div className="absolute inset-0 z-[9999] flex flex-row items-center justify-between px-grid-margin">
             
-            {/* Desktop Navigation - Left Side */}
             <div className="hidden lg:flex items-center gap-8">
               <div 
                 className="flex items-center gap-1 p-1 relative"
@@ -220,7 +231,6 @@ export default function Navbar() {
                 </LayoutGroup>
               </div>
 
-              {/* MEGA DROPDOWN PANEL */}
               <AnimatePresence>
                 {hoveredTab === 'PRODUCTS' && (
                 <div
@@ -304,7 +314,6 @@ export default function Navbar() {
               </AnimatePresence>
             </div>  
 
-            {/* Logo - Center on Desktop, Left on Mobile */}
              <div className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 z-[1100] pointer-events-auto">
               <a href="/">
                 <svg width="200" height="24" viewBox="0 0 84 15" fill="currentColor">
@@ -313,7 +322,6 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Right Side Actions */}
             <div className="hidden lg:flex items-center gap-2">
               <div className="relative">
                 <button 
@@ -358,7 +366,6 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Mobile Actions */}
             <div className="flex lg:hidden items-center gap-2">
               <button 
                 onClick={() => setIsDemoOpen(true)}
@@ -375,7 +382,6 @@ export default function Navbar() {
                 FREE
               </a>
               
-              {/* Mobile Menu Toggle - Hidden on Desktop */}
               <button 
                 className="-mr-3 flex size-12 cursor-pointer items-center justify-center lg:hidden"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
