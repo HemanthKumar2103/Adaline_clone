@@ -579,17 +579,8 @@ video {
 .ml-1{
   margin-left: 0.25rem;
 }
-.mt-1{
-  margin-top: 0.25rem;
-}
-.mt-4{
-  margin-top: 1rem;
-}
 .mt-8{
   margin-top: 2rem;
-}
-.inline-block{
-  display: inline-block;
 }
 .flex{
   display: flex;
@@ -610,6 +601,9 @@ video {
 .h-0{
   height: 0px;
 }
+.h-1\/2{
+  height: 50%;
+}
 .h-12{
   height: 3rem;
 }
@@ -619,8 +613,8 @@ video {
 .h-3{
   height: 0.75rem;
 }
-.h-4{
-  height: 1rem;
+.h-3\/4{
+  height: 75%;
 }
 .h-48{
   height: 12rem;
@@ -637,14 +631,11 @@ video {
 .h-full{
   height: 100%;
 }
-.h-1\/2{
-  height: 50%;
-}
-.h-3\/4{
-  height: 75%;
-}
 .min-h-screen{
   min-height: 100vh;
+}
+.w-1\/2{
+  width: 50%;
 }
 .w-12{
   width: 3rem;
@@ -655,8 +646,8 @@ video {
 .w-3{
   width: 0.75rem;
 }
-.w-4{
-  width: 1rem;
+.w-3\/4{
+  width: 75%;
 }
 .w-6{
   width: 1.5rem;
@@ -669,12 +660,6 @@ video {
 }
 .w-full{
   width: 100%;
-}
-.w-1\/2{
-  width: 50%;
-}
-.w-3\/4{
-  width: 75%;
 }
 .max-w-4xl{
   max-width: 56rem;
@@ -707,16 +692,6 @@ video {
 }
 .-translate-y-1\/4{
   --tw-translate-y: -25%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-.scale-100{
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-.scale-50{
-  --tw-scale-x: .5;
-  --tw-scale-y: .5;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .scale-\[0\.65\]{
@@ -775,20 +750,10 @@ video {
 .gap-8{
   gap: 2rem;
 }
-.space-y-1 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
-}
 .space-y-2 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
-}
-.space-y-3 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 .space-y-6 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
@@ -821,9 +786,6 @@ video {
 }
 .border{
   border-width: 1px;
-}
-.border-t{
-  border-top-width: 1px;
 }
 .border-pebble-200{
   --tw-border-opacity: 1;
@@ -919,23 +881,14 @@ video {
 .pb-24{
   padding-bottom: 6rem;
 }
-.pl-12{
-  padding-left: 3rem;
-}
 .pl-5{
   padding-left: 1.25rem;
-}
-.pt-4{
-  padding-top: 1rem;
 }
 .pt-\[140px\]{
   padding-top: 140px;
 }
 .pt-\[var\(--nav-height\)\]{
   padding-top: var(--nav-height);
-}
-.text-left{
-  text-align: left;
 }
 .text-center{
   text-align: center;
@@ -1136,7 +1089,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Smooth scrolling animations */
 .scroll-animation {
   animation: scroll 20s linear infinite;
 }
@@ -1146,7 +1098,7 @@ body {
   100% { transform: translateX(-50%); }
 }
 
-/* Atlas typography classes */
+
 .atlas-web-lg {
   font-family: 'Akkurat LL', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 43px;
@@ -1176,8 +1128,6 @@ body {
   opacity: 0.7;
   transition: opacity 0.3s ease;
 }
-
-/* Custom color utilities */
 .text-pebble-900 { color: #1c1917; }
 .text-pebble-600 { color: #2f2921; }
 .text-pebble-500 { color: #6b7280; }
@@ -1191,18 +1141,17 @@ body {
 .bg-meadow-700 { background-color: #086229; }
 .bg-meadow-50 { background-color: #0a7029; }
 
-/* Smooth transitions for all interactive elements */
 button, a, [role="button"] {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* GPU acceleration for smooth animations */
+
 .gpu-accelerated {
   will-change: transform, opacity;
   transform: translateZ(0);
 }
 
-/* Hide scrollbar but keep functionality */
+
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
