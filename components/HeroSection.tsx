@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const companyLogos = [
   { name: 'Coframe', width: 100 },
@@ -26,6 +26,7 @@ export default function HeroSection() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showVideoOverlay, setShowVideoOverlay] = useState(false)
   const [shuffledLogos, setShuffledLogos] = useState(companyLogos)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   // Shuffle array function
   const shuffleArray = (array: typeof companyLogos) => {
@@ -57,7 +58,7 @@ export default function HeroSection() {
       const imageIndex = Math.floor(scrollProgress * (images.length - 1))
       setCurrentImageIndex(Math.min(imageIndex, images.length - 1))
       
-      // Show video overlay from image 216 to end
+      // Show video overlay from image 235 to end
       if (imageIndex >= 235) {
         setShowVideoOverlay(true)
       } else {
@@ -83,33 +84,22 @@ export default function HeroSection() {
         <img 
           src={images[currentImageIndex]} 
           alt="Background"
-          className="w-full h-full object-cover transition-opacity duration-100"
+          className="w-full h-full object-cover transition-opacity duration-100 gpu-accelerated"
         />
         
         {/* Video overlay */}
-        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 ${showVideoOverlay ? 'opacity-100 w-3/4 h-3/4 ease-out' : 'opacity-0 w-1/2 h-1/2 ease-in pointer-events-none'}`}>
-          <div className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl">
-            <img 
-              src="/assets/hero-product-shot.png"
-              alt="Video cover"
-              className={`w-full h-full object-cover transition-opacity duration-500 ${isVideoPlaying ? 'opacity-0' : 'opacity-100'}`}
-            />
+        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 ${showVideoOverlay ? 'opacity-100 scale-100 ease-out' : 'opacity-0 scale-75 ease-in pointer-events-none'}`} style={{ width: '80%', maxWidth: '800px', aspectRatio: '16/9' }}>
+          <div className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl cursor-pointer">
             <video 
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isVideoPlaying ? 'opacity-100' : 'opacity-0'}`}
-              controls={isVideoPlaying}
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              controls
+              autoPlay
+              muted
+              loop
             >
               <source src="/assets/product-demo.mp4" type="video/mp4" />
             </video>
-            {!isVideoPlaying && (
-              <button 
-                onClick={() => setIsVideoPlaying(true)}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-lg"
-              >
-                <svg className="w-6 h-6 ml-1 text-black" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </button>
-            )}
           </div>
         </div>
       </div>

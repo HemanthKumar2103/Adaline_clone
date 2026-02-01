@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
+import MobileMenu from './MobileMenu'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -11,10 +12,13 @@ export default function Navbar() {
   const [hoveredPillar, setHoveredPillar] = useState<string | null>(null)
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+      if (isMenuOpen) setIsMenuOpen(false)
+    }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isMenuOpen])
 
   const navOpacity = Math.max(0.3, 1 - scrollY / 500)
 
@@ -237,6 +241,8 @@ export default function Navbar() {
                     <div className="max-w-6xl mx-auto grid grid-cols-4 gap-16">
                       {PRODUCTS_ITEMS.map((item, idx) => {
                         const isHovered = hoveredPillar === item.id;
+                        const isAnyHovered = hoveredPillar !== null;
+                        const shouldDim = isAnyHovered && !isHovered;
                         const IconComponent = [IterateIcon, EvaluateIcon, DeployIcon, MonitorIcon][idx];
                         
                         return (
@@ -245,7 +251,7 @@ export default function Navbar() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.08 + 0.35, duration: 0.6 }}
-                            className="group cursor-pointer"
+                            className={`group cursor-pointer transition-all duration-300 ${shouldDim ? 'opacity-40' : 'opacity-100'}`}
                             onMouseEnter={() => setHoveredPillar(item.id)}
                             onMouseLeave={() => setHoveredPillar(null)}
                           >
@@ -298,8 +304,8 @@ export default function Navbar() {
               </AnimatePresence>
             </div>  
 
-            {/* Logo - Center on Desktop */}
-             <div className="absolute left-1/2 -translate-x-1/2 z-[1100] pointer-events-auto">
+            {/* Logo - Center on Desktop, Left on Mobile */}
+             <div className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 z-[1100] pointer-events-auto">
               <a href="/">
                 <svg width="200" height="24" viewBox="0 0 84 15" fill="currentColor">
                   <path d="M9.15.003.451 12.124v1.733h1.74l8.698-6.928V.003zM10.89 11.777H8.801v2.078h2.087zM39.034.67v5.113h-.036C38.52 5.034 37.472 4.5 36.301 4.5c-2.413 0-4.099 1.906-4.099 4.81 0 2.601 1.562 4.775 4.135 4.775 1.029 0 2.218-.517 2.697-1.425h.035l.089 1.193h1.349V.67zM36.46 12.73c-1.739 0-2.715-1.497-2.715-3.439 0-1.977.976-3.474 2.715-3.474 1.757 0 2.59 1.515 2.59 3.474 0 1.925-.887 3.439-2.59 3.439m13.396-.196V7.742c0-.516-.088-1.015-.283-1.443-.409-.98-1.491-1.8-3.248-1.8-1.916 0-3.584 1.052-3.655 2.887h1.473c.089-1.122 1.1-1.639 2.182-1.639 1.225 0 2.023.606 2.023 1.853v.66l-2.821.195c-2.395.16-3.265 1.568-3.265 2.94 0 1.265.976 2.69 3.159 2.69 1.348 0 2.43-.588 2.98-1.497h.036l.16 1.265h2.218v-1.318zm-1.508-2.53c0 1.586-1.082 2.762-2.697 2.762-1.295 0-1.828-.73-1.828-1.515 0-1.122.994-1.568 1.988-1.639l2.537-.178zM70.263 4.5c-1.1 0-2.414.57-2.857 1.621h-.036l-.106-1.39h-1.33v9.122h1.525v-4.24c0-.766.035-1.657.337-2.334.408-.82 1.189-1.39 2.094-1.39C71.31 5.89 72 6.78 72 8.189v5.665h1.509V7.974c0-2.174-1.225-3.474-3.248-3.474m13.236 5.22c0-.018.036-.25.036-.57 0-2.459-1.384-4.65-4.117-4.65-2.715 0-4.258 2.298-4.258 4.828 0 2.298 1.366 4.757 4.223 4.757 2.058 0 3.637-1.23 3.921-2.975h-1.526c-.302 1.104-1.136 1.621-2.342 1.621-1.721 0-2.715-1.514-2.715-2.922V9.72zM79.4 5.8c1.668 0 2.467 1.283 2.502 2.637h-5.128C76.81 7.101 77.857 5.8 79.4 5.8m-23.74 6.735V.669h-3.301v1.265h1.74v10.601h-1.882v1.318h5.359v-1.318zm6.813 0V4.732h-3.282V6.05h1.72v6.485H58.96v1.318h5.483v-1.318zM64.407.669h-1.934v1.907h1.934zM26.134 8.847l.107-.16h2.714V3.128L21.361 13.89h-1.916v-.036L28.885.67h1.738v13.22h-1.668V9.987h-2.82z" />
@@ -308,11 +314,11 @@ export default function Navbar() {
             </div>
 
             {/* Right Side Actions */}
-            <div className="flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2">
               <div className="relative">
                 <button 
                   onClick={() => setIsDemoOpen(true)}
-                  className="watch-demo-btn inline-flex items-center justify-center gap-3 whitespace-nowrap rounded-[20px] cursor-pointer transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shrink-0 h-8 px-3.5 gap-2 bg-transparent border border-pebble-200 hover:opacity-70 disabled:border-pebble-200 disabled:bg-transparent disabled:text-pebble-300 ring-offset-meadow-50 focus-visible:ring-meadow-700 pl-5 max-xs:hidden !bg-pebble-50"
+                  className="watch-demo-btn inline-flex items-center justify-center gap-3 whitespace-nowrap rounded-[20px] cursor-pointer transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shrink-0 h-8 px-3.5 gap-2 bg-transparent border border-pebble-200 hover:opacity-70 disabled:border-pebble-200 disabled:bg-transparent disabled:text-pebble-300 ring-offset-meadow-50 focus-visible:ring-meadow-700 pl-5 !bg-pebble-50"
                 >
                   WATCH DEMO
                   <div className="-mr-2.5 ml-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pebble-200">
@@ -322,8 +328,8 @@ export default function Navbar() {
                   </div>
                 </button>
                 {isDemoOpen && (
-                  <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50" onClick={() => setIsDemoOpen(false)}>
-                    <div className="bg-white rounded-lg p-8 max-w-4xl w-full mx-4 relative">
+                  <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50 p-4" onClick={() => setIsDemoOpen(false)}>
+                    <div className="bg-white rounded-lg p-4 md:p-8 max-w-4xl w-full relative" onClick={(e) => e.stopPropagation()}>
                       <button 
                         onClick={() => setIsDemoOpen(false)}
                         className="absolute top-4 right-4 text-pebble-500 hover:text-pebble-700 transition-colors"
@@ -336,7 +342,7 @@ export default function Navbar() {
                         src="/assets/product-demo.mp4" 
                         controls 
                         autoPlay
-                        className="w-full rounded-lg"
+                        className="w-full rounded-lg aspect-video"
                       />
                     </div>
                   </div>
@@ -349,6 +355,24 @@ export default function Navbar() {
                 href="https://app.adaline.ai/sign-up?utm_source=adaline.ai"
               >
                 START FOR FREE
+              </a>
+            </div>
+
+            {/* Mobile Actions */}
+            <div className="flex lg:hidden items-center gap-2">
+              <button 
+                onClick={() => setIsDemoOpen(true)}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-[20px] cursor-pointer transition-all h-8 px-3 text-xs bg-pebble-50 border border-pebble-200 hover:opacity-70"
+              >
+                DEMO
+              </button>
+              <a 
+                className="inline-flex items-center text-white justify-center whitespace-nowrap rounded-[20px] cursor-pointer transition-all h-8 px-3 text-xs bg-green-950 hover:bg-green-900" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                href="https://app.adaline.ai/sign-up?utm_source=adaline.ai"
+              >
+                FREE
               </a>
               
               {/* Mobile Menu Toggle - Hidden on Desktop */}
@@ -364,32 +388,12 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-          
-          {/* Mobile Menu */}
-          <div 
-            aria-hidden="true" 
-            className="overflow-clip shadow-[0_1px_0_0_transparent] transition-shadow duration-200 lg:hidden" 
-            style={{ height: isMenuOpen ? 'auto' : '0px' }}
-          >
-            {isMenuOpen && (
-              <div className="bg-pebble-50 px-grid-margin flex flex-col py-4 pt-[var(--nav-height)]">
-                <div className="flex flex-col gap-4 py-2">
-                  <div className="nav-link py-2">
-                    <a href="/products">Products</a>
-                  </div>
-                  <div className="nav-link py-2">
-                    <a href="/pricing">Pricing</a>
-                  </div>
-                  <div className="nav-link py-2">
-                    <a href="/blog">Blog</a>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
       </motion.nav>
-      <div className="bg-meadow-950/20 fixed top-0 right-0 bottom-0 left-0 z-[calc(var(--nav-z-index)-2)] pointer-events-none" style={{ opacity: isMenuOpen ? 1 : 0 }}></div>
+      
+      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      
+      <div className="bg-meadow-950/20 fixed top-0 right-0 bottom-0 left-0 z-[9997] pointer-events-none" style={{ opacity: isMenuOpen ? 1 : 0 }}></div>
     </div>
   )
 }
